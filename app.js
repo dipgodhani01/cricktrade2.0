@@ -8,12 +8,6 @@ const cookieParser = require("cookie-parser");
 const app = express();
 module.exports = { app };
 dotenv.config();
-console.log("ENV CHECK:", {
-  JWT_SECRET: process.env.JWT_SECRET,
-  JWT_EXPIRE: process.env.JWT_EXPIRE,
-  COOKIE_EXPIRE: process.env.COOKIE_EXPIRE,
-  FRONTEND_URL: process.env.FRONTEND_URL,
-});
 
 app.use(
   cors({

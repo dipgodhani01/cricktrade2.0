@@ -78,4 +78,18 @@ const getLoggedInAdmin = catchAsyncError(async (req, res, next) => {
   });
 });
 
-module.exports = { seedAdmin, loginAdmin, getAdmins, getLoggedInAdmin };
+const logoutAdmin = catchAsyncError(async (req, res, next) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
+});
+
+
+module.exports = { seedAdmin, loginAdmin, getAdmins, getLoggedInAdmin ,logoutAdmin};
