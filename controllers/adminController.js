@@ -33,7 +33,7 @@ const getAdmins = async (req, res) => {
     }
 
     res.status(200).json({
-      success: true,
+      status: true,
       count: admins.length,
       admins,
     });
@@ -73,7 +73,7 @@ const loginAdmin = catchAsyncError(async (req, res, next) => {
 
 const getLoggedInAdmin = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
-    success: true,
+    status: true,
     admin: req.admin,
   });
 });
@@ -86,7 +86,7 @@ const logoutAdmin = catchAsyncError(async (req, res, next) => {
   });
 
   res.status(200).json({
-    success: true,
+    status: true,
     message: "Logged out successfully",
   });
 });
