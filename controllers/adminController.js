@@ -1,4 +1,5 @@
 const Admin = require("../model/Admin.js");
+const bcrypt = require("bcrypt");
 
 const seedAdmin = async () => {
   try {
