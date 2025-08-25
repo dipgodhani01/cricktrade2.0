@@ -24,6 +24,8 @@ const adminSchema = new mongoose.Schema(
 );
 
 adminSchema.methods.generateToken = function () {
+    console.log(process.env.JWT_SECRET);
+    
   return jwt.sign(
     { id: this._id, email: this.email, role: this.role },
     process.env.JWT_SECRET,
