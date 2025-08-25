@@ -26,7 +26,7 @@ const seedAdmin = async () => {
 
 const getAdmins = async (req, res) => {
   try {
-    const admins = await Admin.find({ role: 1 }).select("-password"); // password ko exclude kar diya
+    const admins = await Admin.find({ role: 1 }).select("-password"); 
 
     if (!admins.length) {
       return res.status(404).json({ message: "No admins found" });
@@ -65,8 +65,6 @@ const loginAdmin = catchAsyncError(async (req, res, next) => {
 
     sendToken(admin, 200, "Admin logged in successfully.", res);
   } catch (error) {
-    console.log(error);
-
     return next(new ErrorHandler("Internal Server Error.", 500));
   }
 });

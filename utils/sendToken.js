@@ -13,7 +13,7 @@ sendToken = async (admin, statusCode, message, res) => {
       secure: true,    
     })
     .json({
-      success: true,
+      status: true,
       message,
       data: {
         id: admin._id,
@@ -26,4 +26,4 @@ sendToken = async (admin, statusCode, message, res) => {
 };
 
 
-module.exports = {sendToken}
+module.exports = {sendToken};
