@@ -15,7 +15,7 @@ sendToken = async (admin, statusCode, message, res) => {
     .json({
       success: true,
       message,
-      user: {
+      data: {
         id: admin._id,
         username: admin.username,
         email: admin.email,
