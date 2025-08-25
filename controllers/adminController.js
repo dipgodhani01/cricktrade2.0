@@ -79,10 +79,10 @@ const getLoggedInAdmin = catchAsyncError(async (req, res, next) => {
 });
 
 const logoutAdmin = catchAsyncError(async (req, res, next) => {
-  res.clearCookie("token", {
+  res.clearCookie("admin_token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: "None", 
   });
 
   res.status(200).json({
