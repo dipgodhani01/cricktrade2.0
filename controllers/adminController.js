@@ -1,9 +1,14 @@
+const { catchAsyncError } = require("../middlewares/catchAsyncError.js");
+const ErrorHandler = require("../middlewares/error.js");
 const Admin = require("../model/Admin.js");
 const bcrypt = require("bcrypt");
+const { sendToken } = require("../utils/sendToken.js");
 
 const seedAdmin = async () => {
   try {
-    const adminExists = await Admin.findOne({ email: "prowesscheck@gmail.com" });
+    const adminExists = await Admin.findOne({
+      email: "prowesscheck@gmail.com",
+    });
     if (adminExists) return;
 
     const hashedPassword = await bcrypt.hash("admin@123", 12);
@@ -14,8 +19,6 @@ const seedAdmin = async () => {
       password: hashedPassword,
       role: 1,
     });
-
-
   } catch (error) {
     console.error("Error seeding admin:", error.message);
   }
@@ -35,8 +38,44 @@ const getAdmins = async (req, res) => {
       admins,
     });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching admins", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching admins", error: error.message });
   }
 };
 
-module.exports = { seedAdmin,getAdmins };
+const loginAdmin = catchAsyncError(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      return next(new ErrorHandler("Email and Password are required.", 400));
+    }
+
+    const admin = await Admin.findOne({ email }).select("+password");
+
+    if (!admin) {
+      return next(new ErrorHandler("Invalid email or password.", 400));
+    }
+
+    const isPasswordMatched = await bcrypt.compare(password, admin.password);
+    if (!isPasswordMatched) {
+      return next(new ErrorHandler("Incorrect password.", 400));
+    }
+
+    sendToken(admin, 200, "Admin logged in successfully.", res);
+  } catch (error) {
+    console.log(error);
+
+    return next(new ErrorHandler("Internal Server Error.", 500));
+  }
+});
+
+const getLoggedInAdmin = catchAsyncError(async (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    admin: req.admin,
+  });
+});
+
+module.exports = { seedAdmin, loginAdmin, getAdmins, getLoggedInAdmin };
