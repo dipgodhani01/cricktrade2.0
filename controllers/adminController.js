@@ -69,7 +69,8 @@ const loginAdmin = catchAsyncError(async (req, res, next) => {
   }
 });
 
-const getLoggedInAdmin = catchAsyncError(async (req, res, next) => {
+const getLoggedInAdmin = catchAsyncError(async (req, res, next) => {  
+  console.log("req.admin",req.admin);
   res.status(200).json({
     status: true,
     admin: req.admin,
