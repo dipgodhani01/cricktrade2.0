@@ -9,7 +9,6 @@ sendToken = async (admin, statusCode, message, res) => {
         Date.now() + Number(process.env.COOKIE_EXPIRE) * 24 * 60 * 60 * 1000
       ),
       httpOnly: true,
-      httpOnly: true,
       sameSite: isProduction ? "None" : "Lax",
       secure: isProduction,
     })
@@ -24,6 +23,7 @@ sendToken = async (admin, statusCode, message, res) => {
       },
       token,
     });
+   
 };
 
 module.exports = { sendToken };
