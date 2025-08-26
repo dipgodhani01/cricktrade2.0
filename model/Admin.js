@@ -24,8 +24,11 @@ const adminSchema = new mongoose.Schema(
 );
 
 adminSchema.methods.generateToken = function () {
+  let role = this.role === 1 ? "admin" : "subadmin";
+  console.log(role);
+  
   return jwt.sign(
-    { id: this._id, email: this.email, role: this.role },
+    { id: this._id, email: this.email, role: role },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || "1d" }
   );

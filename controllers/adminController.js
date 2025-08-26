@@ -46,6 +46,8 @@ const getAdmins = async (req, res) => {
 
 const loginAdmin = catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
+console.log(email);
+console.log(password);
 
   try {
     if (!email || !password) {
@@ -62,6 +64,8 @@ const loginAdmin = catchAsyncError(async (req, res, next) => {
     if (!isPasswordMatched) {
       return next(new ErrorHandler("Incorrect password.", 400));
     }
+    console.log(isPasswordMatched);
+    
 
     sendToken(admin, 200, "Admin logged in successfully.", res);
   } catch (error) {
@@ -70,7 +74,7 @@ const loginAdmin = catchAsyncError(async (req, res, next) => {
 });
 
 const getLoggedInAdmin = catchAsyncError(async (req, res, next) => {  
-  console.log("req.admin",req.admin);
+  console.log(req.admin);
   res.status(200).json({
     status: true,
     admin: req.admin,

@@ -1,16 +1,16 @@
 sendToken = async (admin, statusCode, message, res) => {
-   const token = admin.generateToken();
+  const token = admin.generateToken();
+  console.log(token);
 
-    res
+  res
     .status(statusCode)
     .cookie("admin_token", token, {
       expires: new Date(
-        Date.now() +
-          Number(process.env.COOKIE_EXPIRE) * 24 * 60 * 60 * 1000
+        Date.now() + Number(process.env.COOKIE_EXPIRE) * 24 * 60 * 60 * 1000
       ),
       httpOnly: true,
       sameSite: "None",
-      secure: true,    
+      secure: true,
     })
     .json({
       status: true,
@@ -25,5 +25,4 @@ sendToken = async (admin, statusCode, message, res) => {
     });
 };
 
-
-module.exports = {sendToken};
+module.exports = { sendToken };
