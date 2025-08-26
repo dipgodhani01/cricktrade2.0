@@ -10,7 +10,8 @@ sendToken = async (admin, statusCode, message, res) => {
       ),
       httpOnly: true,
       sameSite: "None",
-      secure: true,
+      // secure: true,
+      secure: false,
     })
     .json({
       status: true,
