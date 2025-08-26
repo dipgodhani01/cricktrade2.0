@@ -46,8 +46,6 @@ const getAdmins = async (req, res) => {
 
 const loginAdmin = catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
-console.log(email);
-console.log(password);
 
   try {
     if (!email || !password) {

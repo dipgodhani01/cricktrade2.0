@@ -5,7 +5,6 @@ const ErrorHandler = require("./error.js");
 exports.isAuthenticatedAdmin = async (req, res, next) => {
   try {
     const { admin_token } = req.cookies;
-    console.log(admin_token);
 
     if (!admin_token) {
       return next(
@@ -14,10 +13,10 @@ exports.isAuthenticatedAdmin = async (req, res, next) => {
     }
 
     const decodedData = jwt.verify(admin_token, process.env.JWT_SECRET);
-    console.log(decodedData);
+    console.log("decodedData", decodedData);
 
     const admin = await Admin.findById(decodedData.id).select("-password");
-    console.log(admin);
+    console.log("admin", admin);
     if (!admin) {
       return next(new ErrorHandler("Admin not found", 404));
     }
