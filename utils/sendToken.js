@@ -1,5 +1,7 @@
 sendToken = async (admin, statusCode, message, res) => {
   const token = admin.generateToken();
+  const isProduction = process.env.NODE_ENV === "production";
+
   res
     .status(statusCode)
     .cookie("admin_token", token, {
@@ -7,9 +9,9 @@ sendToken = async (admin, statusCode, message, res) => {
         Date.now() + Number(process.env.COOKIE_EXPIRE) * 24 * 60 * 60 * 1000
       ),
       httpOnly: true,
-      sameSite: "None",
-      secure: true,
-      // secure: false,
+      httpOnly: true,
+      sameSite: isProduction ? "None" : "Lax",
+      secure: isProduction,
     })
     .json({
       status: true,
