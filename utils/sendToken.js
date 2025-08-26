@@ -1,7 +1,5 @@
 sendToken = async (admin, statusCode, message, res) => {
   const token = admin.generateToken();
-  console.log(token);
-
   res
     .status(statusCode)
     .cookie("admin_token", token, {
@@ -10,8 +8,8 @@ sendToken = async (admin, statusCode, message, res) => {
       ),
       httpOnly: true,
       sameSite: "None",
-      // secure: true,
-      secure: false,
+      secure: true,
+      // secure: false,
     })
     .json({
       status: true,

@@ -61,9 +61,7 @@ const loginAdmin = catchAsyncError(async (req, res, next) => {
     const isPasswordMatched = await bcrypt.compare(password, admin.password);
     if (!isPasswordMatched) {
       return next(new ErrorHandler("Incorrect password.", 400));
-    }
-    console.log(isPasswordMatched);
-    
+    }    
 
     sendToken(admin, 200, "Admin logged in successfully.", res);
   } catch (error) {
